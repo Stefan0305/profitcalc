@@ -18,10 +18,11 @@
             <div class="table-head row">
                 <div class="col-2">Pair</div>
                 <div class="col-2">Position</div>
-                <div class="col-2">Lot</div>
+                <div class="col-1">Lot</div>
                 <div class="col-2">Swap</div>
                 <div class="col-2">Opening price</div>
                 <div class="col-2">Profit</div>
+                <div class="col-1">Delete pair</div>
             </div>
 
             <div class="pairs">
@@ -43,11 +44,12 @@
                             <option value="sell">SELL</option>
                         </select>
                     </div>
-                    <div class="col-2 lot"><input class="form-control" type="text" name="lot"></div>
+                    <div class="col-1 lot"><input class="form-control" type="text" name="lot"></div>
                     <div class="col-2 swap"><input class="form-control" type="text" name="swap" value="0"></div>
                     <div class="col-2 opening-price"><input class="form-control" type="text" name="opening-price"value="0"></div>
                     <div class="col-2 profit"><input class="form-control" type="text" name="profit" value='0' readonly>
                     </div>
+                    <div class="col-1 lot"><button type="button" class="btn btn-outline-danger" onclick="removePair(this)">Delete</button></div>
                 </div>
             </div>
 
@@ -85,11 +87,14 @@
                     </select>
                 </div>
                 <div class="col-2"><input class="form-control" type="text" name="qb-rate" value="1"></div>
+                <div class="col-1 btn btn-danger" onclick="lowerTarget(50)">-50 pips</div>
+                <div class="col-1 btn btn-danger" onclick="lowerTarget(10)">-10 pips</div>
+                <div class="col-1 btn btn-danger" onclick="lowerTarget(5)">-5 pip</div>
                 <div class="col-2 current-price"><input class="form-control" type="text" name="current-price" value="0">
                 </div>
-                <div class="col-1 btn btn-secondary" onclick="raiseTarget(5)">+5 pip</div>
-                <div class="col-1 btn btn-secondary" onclick="raiseTarget(10)">+10 pips</div>
-                <div class="col-1 btn btn-secondary" onclick="raiseTarget(50)">+50 pips</div>
+                <div class="col-1 btn btn-success" onclick="raiseTarget(5)">+5 pip</div>
+                <div class="col-1 btn btn-success" onclick="raiseTarget(10)">+10 pips</div>
+                <div class="col-1 btn btn-success" onclick="raiseTarget(50)">+50 pips</div>
             </div>
         </div>
         

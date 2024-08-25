@@ -21,14 +21,20 @@ function addPair() {
                             <option value="sell">SELL</option>
                         </select>
                     </div>
-                    <div class="col-2 lot"><input class="form-control" type="text" name="lot"></div>
+                    <div class="col-1 lot"><input class="form-control" type="text" name="lot"></div>
                     <div class="col-2 swap"><input class="form-control" type="text" name="swap" value="0"></div>
                     <div class="col-2 opening-price"><input class="form-control" type="text" name="opening-price"value="0"></div>
                     <div class="col-2 profit"><input class="form-control" type="text" name="profit" value='0' readonly>
                     </div>
+                    <div class="col-1 lot"><button type="button" class="btn btn-outline-danger" onclick="removePair(this)">Delete</button></div>
                 </div>`
     )
     calcTotalProfit();
+}
+
+function removePair(el) {
+    $('.pairs').find(el).parent().parent().remove();
+    calcPairProfit();
 }
 
 
@@ -43,11 +49,11 @@ function calcPairProfit(element) {
     const opening_price = parseFloat(trade.find('input[name=opening-price]').val());
     const current_price = parseFloat($('input[name=current-price]').val());
 
-    const pips = ((current_price - opening_price).toFixed(5) * 10000);
-    let profit = ((pips * (10 * lot) * qb_rate) - comission - swap).toFixed(2);
+    let pips = ((current_price - opening_price).toFixed(5) * 10000);
     if (position === 'sell') {
-        profit *= -1;
+        pips *= -1;
     }
+    let profit = ((pips * (10 * lot) * qb_rate) - comission - swap).toFixed(2);
     trade.find('input[name=profit]').val(profit);
     calcTotalProfit();
 }
@@ -72,6 +78,13 @@ function calcTotalProfit() {
 function raiseTarget(val) {
     const current_price = parseFloat($('input[name=current-price]').val());
     let new_current_price = parseFloat(current_price + (val / 10000)).toFixed(5);
+    $('input[name=current-price]').val(new_current_price);
+    updatePairProfit();
+}
+
+function lowerTarget(val) {
+    const current_price = parseFloat($('input[name=current-price]').val());
+    let new_current_price = parseFloat(current_price - (val / 10000)).toFixed(5);
     $('input[name=current-price]').val(new_current_price);
     updatePairProfit();
 }
