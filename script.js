@@ -43,7 +43,7 @@ function calcPairProfit(element) {
     const trade = $(element.closest('.pair-row'));
     const lot = parseFloat(trade.find('input[name=lot]').val());
     const position = trade.find('#position').val();
-    const comission = Math.round((lot * 6) * 100) / 100;
+    // const comission = Math.round((lot * 6) * 100) / 100;
     const swap = parseFloat(trade.find('input[name=swap]').val());
     const qb_rate = parseFloat($('input[name=qb-rate]').val());
     const opening_price = parseFloat(trade.find('input[name=opening-price]').val());
@@ -53,7 +53,7 @@ function calcPairProfit(element) {
     if (position === 'sell') {
         pips *= -1;
     }
-    let profit = ((pips * (10 * lot) * qb_rate) - comission - swap).toFixed(2);
+    let profit = ((pips * (10 * lot) * qb_rate) - swap).toFixed(2);
     trade.find('input[name=profit]').val(profit);
     calcTotalProfit();
 }
