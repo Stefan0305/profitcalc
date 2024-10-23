@@ -13,6 +13,7 @@ function addPair() {
                             <option value="GBP,USD">GBPUSD</option>
                             <option value="NZD,USD">NZDUSD</option>
                             <option value="USD,CAD">USDCAD</option>
+                            <option value="XAU,USD">XAUUSD</option>
                         </select>
                     </div>
                     <div class="col-2 position">
@@ -37,10 +38,14 @@ function removePair(el) {
     calcPairProfit();
 }
 
-
-
 function calcPairProfit(element) {
     const trade = $(element.closest('.pair-row'));
+
+    if ($(trade).find($('select[name="pair"]')).val() == 'XAU,USD') {
+        calcGold(element);
+        return;
+    }
+
     const lot = parseFloat(trade.find('input[name=lot]').val());
     const position = trade.find('#position').val();
     // const comission = Math.round((lot * 6) * 100) / 100;
@@ -54,6 +59,23 @@ function calcPairProfit(element) {
         pips *= -1;
     }
     let profit = ((pips * (10 * lot) * qb_rate) - swap).toFixed(2);
+    trade.find('input[name=profit]').val(profit);
+    calcTotalProfit();
+}
+
+function calcGold(element) {
+    console.log('calculating gold');
+    const trade = $(element.closest('.pair-row'));
+    const lot = parseFloat(trade.find('input[name=lot]').val());
+    const position = trade.find('#position').val();
+    const opening_price = parseFloat(trade.find('input[name=opening-price]').val());
+    const current_price = parseFloat($('input[name=current-price]').val());
+
+    let pips = (current_price - opening_price);
+    if (position === 'sell') {
+        pips *= -1;
+    }
+    let profit = ((pips * (100 * lot))).toFixed(2);
     trade.find('input[name=profit]').val(profit);
     calcTotalProfit();
 }
